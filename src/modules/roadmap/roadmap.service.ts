@@ -41,7 +41,7 @@ export class RoadmapService {
       data: {
         name: mainTopic.name,
         emoji: mainTopic.emoji,
-        link: '一级标题',
+        contentId: '',
       },
     }
     const data = this.buildNestedStructure({
@@ -58,13 +58,14 @@ export class RoadmapService {
 
     // 创建所有节点的映射
     data.children.forEach((child) => {
+      
       map.set(child.id, {
         id: child.id,
         type: 'custom',
         data: {
           name: child.name,
           emoji: child.emoji,
-          link: '二级子标题',
+          contentId: child.contentId,
         },
         lastTopicId: child.lastTopicId,
         mainTopicId: child.mainTopicId,
