@@ -48,10 +48,6 @@ export class RoadmapService {
       ...newMainData,
       children: childTopics,
     });
-    console.log({
-      ...newMainData,
-      children: childTopics,
-    });
 
     return data;
   }

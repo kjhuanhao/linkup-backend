@@ -8,6 +8,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoMYSQLConfig, getMysqlConfig } from './utils/conifg';
 import { TopicsModule } from './topic/topic.module'
 import { RoadMapModule } from './modules/roadmap/roadmap.module'
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
+import { ResponseInterceptor } from './interceptors/response.intereptor'
+import { GlobalExceptionFilter } from './filters/globalExpection.filter'
 
 @Module({
   imports: [
@@ -18,9 +21,17 @@ import { RoadMapModule } from './modules/roadmap/roadmap.module'
     MongooseModule.forRoot(getMongoMYSQLConfig()),
     getMysqlConfig(),
     TopicsModule,
-    RoadMapModule
+    RoadMapModule,
   ],
   controllers: [AppController],
-  providers: [AppService, LLMService],
+  providers: [
+    AppService,
+    LLMService,
+    { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor },
+    {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}
