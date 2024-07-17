@@ -28,5 +28,7 @@ export const getMysqlConfig = () => {
 
 export const getMongoMYSQLConfig = () => {
   const configService = new ConfigService();
-  return configService.get<string>("MONGO_URL");
+  console.log(configService.get<string>("MONGO_URI"), '9999999');
+  
+  return configService.get<string>("MONGO_URI");
 }
