@@ -12,10 +12,13 @@ export class ContentEntity {
   id: string;
 
   @Column()
-  name: string
+  title: string
+
+  @Column('longtext')
+  content: string;
 
   @Column()
-  contentId: string;
+  resource: string
 
   @CreateDateColumn()
   createdAt: Date;

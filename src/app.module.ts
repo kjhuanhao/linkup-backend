@@ -11,6 +11,7 @@ import { RoadMapModule } from './modules/roadmap/roadmap.module'
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 import { ResponseInterceptor } from './interceptors/response.intereptor'
 import { GlobalExceptionFilter } from './filters/globalExpection.filter'
+import { ContentModule } from './modules/content/content.module'
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { GlobalExceptionFilter } from './filters/globalExpection.filter'
     getMysqlConfig(),
     TopicsModule,
     RoadMapModule,
+    ContentModule
   ],
   controllers: [AppController],
   providers: [
