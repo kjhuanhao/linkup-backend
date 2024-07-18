@@ -1,15 +1,16 @@
-import { ConfigService } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm"
+import { ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { NestMinioModule } from 'nestjs-minio'
 
 export const getApiKeyConfig = () => {
   const configService = new ConfigService();
-  return configService.get<string>("API_KEY");
-} 
+  return configService.get<string>('API_KEY');
+};
 
 export const getMysqlConfig = () => {
   const configService = new ConfigService();
   console.log(configService.get<string>('MYSQL', 'localhost'));
-  
+
   return TypeOrmModule.forRoot({
     type: 'mysql',
     host: configService.get<string>('MYSQL_HOST', 'localhost'),
@@ -28,7 +29,24 @@ export const getMysqlConfig = () => {
 
 export const getMongoMYSQLConfig = () => {
   const configService = new ConfigService();
-  console.log(configService.get<string>("MONGO_URI"), '9999999');
+  console.log(configService.get<string>('MONGO_URI'), '9999999');
+
+  return configService.get<string>('MONGO_URI');
+};
+
+export const getMinioConfig = () => {
+  const configService = new ConfigService();
+  const endPoint = configService.get<string>('MINIO_ENDPOINT', 'localhost');
+  const accessKey = configService.get<string>('MINIO_ACCESS_KEY', 'accessKey');
+  const secretKey = configService.get<string>('MINIO_SECRET_KEY', 'secretKey');
+  console.log(endPoint, accessKey, secretKey);
   
-  return configService.get<string>("MONGO_URI");
-}
+  return NestMinioModule.register({
+    isGlobal: true,
+    endPoint,
+    port: 443,
+    accessKey,
+    secretKey,
+    useSSL: true,
+  });
+};
